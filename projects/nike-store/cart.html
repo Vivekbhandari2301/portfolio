@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <title>Your Cart - Nike Store</title>
+    <style>
+        .cart-container {
+            max-width: 1200px;
+            margin: 40px auto;
+            padding: 0 20px;
+        }
+
+        .cart-header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .cart-header h1 {
+            font-size: 32px;
+            margin-bottom: 10px;
+        }
+
+        .cart-header p {
+            color: #666;
+            font-size: 16px;
+        }
+
+        .cart-content {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 30px;
+        }
+
+        .cart-items {
+            background: white;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .cart-item {
+            display: grid;
+            grid-template-columns: 100px 2fr 1fr 1fr 1fr auto;
+            align-items: center;
+            gap: 20px;
+            padding: 20px 0;
+            border-bottom: 1px solid #eee;
+        }
+
+        .cart-item:last-child {
+            border-bottom: none;
+        }
+
+        .item-image {
+            width: 100px;
+            height: 100px;
+            object-fit: cover;
+            border-radius: 5px;
+        }
+
+        .item-name {
+            font-weight: 600;
+            color: #333;
+            text-decoration: none;
+        }
+
+        .item-name:hover {
+            color: #000;
+        }
+
+        .quantity-controls {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .quantity-btn {
+            background: #f5f5f5;
+            border: none;
+            width: 30px;
+            height: 30px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        .quantity-btn:hover {
+            background: #eee;
+        }
+
+        .remove-btn {
+            background: none;
+            border: none;
+            color: #ff4444;
+            cursor: pointer;
+            font-size: 20px;
+        }
+
+        .remove-btn:hover {
+            color: #cc0000;
+        }
+
+        .order-summary {
+            background: white;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            height: fit-content;
+        }
+
+        .summary-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 15px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .summary-row:last-child {
+            border-bottom: none;
+            font-weight: bold;
+            font-size: 18px;
+        }
+
+        .coupon-section {
+            margin: 20px 0;
+            padding: 15px;
+            background: #f9f9f9;
+            border-radius: 5px;
+        }
+
+        .coupon-input {
+            display: flex;
+            gap: 10px;
+        }
+
+        .coupon-input input {
+            flex: 1;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+
+        .apply-btn {
+            background: #333;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .apply-btn:hover {
+            background: #444;
+        }
+
+        .checkout-btn {
+            width: 100%;
+            background: #000;
+            color: white;
+            border: none;
+            padding: 15px;
+            border-radius: 5px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            margin-top: 20px;
+        }
+
+        .checkout-btn:hover {
+            background: #333;
+        }
+
+        .continue-shopping {
+            display: block;
+            text-align: center;
+            margin-top: 20px;
+            color: #666;
+            text-decoration: none;
+        }
+
+        .continue-shopping:hover {
+            color: #000;
+        }
+
+        .security-badge {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-top: 20px;
+            padding: 15px;
+            background: #f9f9f9;
+            border-radius: 5px;
+        }
+
+        .security-badge img {
+            width: 24px;
+            height: 24px;
+        }
+
+        @media (max-width: 768px) {
+            .cart-content {
+                grid-template-columns: 1fr;
+            }
+
+            .cart-item {
+                grid-template-columns: 80px 1fr;
+                gap: 10px;
+            }
+
+            .item-price, .item-total {
+                grid-column: 2;
+            }
+
+            .quantity-controls {
+                grid-column: 2;
+            }
+
+            .remove-btn {
+                grid-column: 2;
+                justify-self: start;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav id="nav">
+        <div class="navTop">
+            <div class="navItem">
+                <a href="index.html">
+                    <img src="./img/sneakers.png" alt="Nike Store">
+                </a>
+            </div>
+            <div class="navItem">
+                <div class="search">
+                    <input type="text" placeholder="Search..." class="searchInput">
+                    <img src="./img/search.png" width="20" height="20" alt="" class="searchIcon">
+                </div>
+            </div>
+            <div class="navItem">
+                <a href="login.html" class="loginButton">Login</a>
+            </div>
+            <div class="navItem">
+                <a href="cart.html" class="cartButton">
+                    <svg class="cartIcon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M9 22C9.55228 22 10 21.5523 10 21C10 20.4477 9.55228 20 9 20C8.44772 20 8 20.4477 8 21C8 21.5523 8.44772 22 9 22Z" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M20 22C20.5523 22 21 21.5523 21 21C21 20.4477 20.5523 20 20 20C19.4477 20 19 20.4477 19 21C19 21.5523 19.4477 22 20 22Z" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M1 1H5L7.68 14.39C7.77144 14.8504 8.02191 15.264 8.38755 15.5583C8.75318 15.8526 9.2107 16.009 9.68 16H19.4C19.8693 16.009 20.3268 15.8526 20.6925 15.5583C21.0581 15.264 21.3086 14.8504 21.4 14.39L23 6H6" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                    Cart
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="cart-container">
+        <div class="cart-header">
+            <h1>Your Cart</h1>
+            <p>Review the items you've selected before proceeding. You can update quantities, remove products, or apply a coupon code.</p>
+        </div>
+
+        <div class="cart-content">
+            <div class="cart-items">
+                <!-- Sample Cart Items -->
+                <div class="cart-item">
+                    <img src="./img/air.png" alt="Air Force" class="item-image">
+                    <a href="#" class="item-name">Nike Air Force 1</a>
+                    <div class="item-price">$119</div>
+                    <div class="quantity-controls">
+                        <button class="quantity-btn">-</button>
+                        <span>1</span>
+                        <button class="quantity-btn">+</button>
+                    </div>
+                    <div class="item-total">$119</div>
+                    <button class="remove-btn">×</button>
+                </div>
+
+                <div class="cart-item">
+                    <img src="./img/jordan.png" alt="Jordan" class="item-image">
+                    <a href="#" class="item-name">Air Jordan 1</a>
+                    <div class="item-price">$149</div>
+                    <div class="quantity-controls">
+                        <button class="quantity-btn">-</button>
+                        <span>1</span>
+                        <button class="quantity-btn">+</button>
+                    </div>
+                    <div class="item-total">$149</div>
+                    <button class="remove-btn">×</button>
+                </div>
+            </div>
+
+            <div class="order-summary">
+                <h2>Order Summary</h2>
+                <div class="summary-row">
+                    <span>Subtotal</span>
+                    <span>$268</span>
+                </div>
+                <div class="summary-row">
+                    <span>Shipping</span>
+                    <span>Free</span>
+                </div>
+                <div class="summary-row">
+                    <span>Tax</span>
+                    <span>$26.80</span>
+                </div>
+                <div class="summary-row">
+                    <span>Total</span>
+                    <span>$294.80</span>
+                </div>
+
+                <div class="coupon-section">
+                    <h3>Apply Coupon</h3>
+                    <div class="coupon-input">
+                        <input type="text" placeholder="Enter coupon code">
+                        <button class="apply-btn">Apply</button>
+                    </div>
+                </div>
+
+                <button class="checkout-btn">Proceed to Checkout</button>
+                <a href="index.html" class="continue-shopping">Continue Shopping</a>
+
+                <div class="security-badge">
+                    <img src="./img/secure.png" alt="Secure">
+                    <span>100% Secure Checkout</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Cart functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            const quantityBtns = document.querySelectorAll('.quantity-btn');
+            const removeBtns = document.querySelectorAll('.remove-btn');
+            
+            // Update quantity
+            quantityBtns.forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const item = this.closest('.cart-item');
+                    const quantitySpan = item.querySelector('.quantity-controls span');
+                    const price = parseFloat(item.querySelector('.item-price').textContent.replace('$', ''));
+                    let quantity = parseInt(quantitySpan.textContent);
+                    
+                    if (this.textContent === '+') {
+                        quantity++;
+                    } else if (quantity > 1) {
+                        quantity--;
+                    }
+                    
+                    quantitySpan.textContent = quantity;
+                    item.querySelector('.item-total').textContent = `$${(price * quantity).toFixed(2)}`;
+                    updateTotal();
+                });
+            });
+            
+            // Remove item
+            removeBtns.forEach(btn => {
+                btn.addEventListener('click', function() {
+                    this.closest('.cart-item').remove();
+                    updateTotal();
+                });
+            });
+            
+            // Update total
+            function updateTotal() {
+                const totals = Array.from(document.querySelectorAll('.item-total'))
+                    .map(el => parseFloat(el.textContent.replace('$', '')));
+                const subtotal = totals.reduce((a, b) => a + b, 0);
+                const tax = subtotal * 0.1;
+                const total = subtotal + tax;
+                
+                document.querySelector('.summary-row:nth-child(1) span:last-child').textContent = `$${subtotal.toFixed(2)}`;
+                document.querySelector('.summary-row:nth-child(3) span:last-child').textContent = `$${tax.toFixed(2)}`;
+                document.querySelector('.summary-row:last-child span:last-child').textContent = `$${total.toFixed(2)}`;
+            }
+        });
+    </script>
+</body>
+</html> 

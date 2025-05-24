@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <title>Sign Up - Nike Store</title>
+    <style>
+        .auth-container {
+            min-height: calc(100vh - 80px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: #f5f5f5;
+            padding: 20px;
+        }
+
+        .auth-box {
+            background-color: white;
+            padding: 40px;
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 400px;
+        }
+
+        .auth-box h2 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 30px;
+            font-size: 24px;
+        }
+
+        .auth-form {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .form-group label {
+            color: #555;
+            font-size: 14px;
+            font-weight: 500;
+        }
+
+        .auth-input {
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 14px;
+            transition: border-color 0.3s ease;
+        }
+
+        .auth-input:focus {
+            border-color: #369e62;
+            outline: none;
+        }
+
+        .auth-button {
+            background-color: #369e62;
+            color: white;
+            padding: 12px;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .auth-button:hover {
+            background-color: #2d7d4e;
+            transform: translateY(-2px);
+        }
+
+        .auth-button:active {
+            transform: translateY(0);
+        }
+
+        .auth-button.loading {
+            position: relative;
+            color: transparent;
+        }
+
+        .auth-button.loading::after {
+            content: "";
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            top: 50%;
+            left: 50%;
+            margin: -10px 0 0 -10px;
+            border: 2px solid #ffffff;
+            border-top-color: transparent;
+            border-radius: 50%;
+            animation: button-loading-spinner 1s linear infinite;
+        }
+
+        @keyframes button-loading-spinner {
+            from {
+                transform: rotate(0turn);
+            }
+            to {
+                transform: rotate(1turn);
+            }
+        }
+
+        .auth-links {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .auth-links a {
+            color: #369e62;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+
+        .auth-links a:hover {
+            color: #2d7d4e;
+        }
+
+        .auth-links p {
+            margin-top: 15px;
+            color: #666;
+            font-size: 14px;
+        }
+
+        @media screen and (max-width: 480px) {
+            .auth-box {
+                padding: 30px 20px;
+            }
+
+            .auth-box h2 {
+                font-size: 20px;
+            }
+
+            .auth-input {
+                padding: 10px;
+            }
+
+            .auth-button {
+                padding: 10px;
+                font-size: 14px;
+            }
+        }
+
+        .error-message {
+            color: #dc3545;
+            font-size: 12px;
+            margin-top: 4px;
+            display: none;
+        }
+
+        .auth-input.error {
+            border-color: #dc3545;
+        }
+
+        .auth-input.error:focus {
+            border-color: #dc3545;
+        }
+    </style>
+</head>
+<body>
+    <nav id="nav">
+        <div class="navTop">
+            <div class="navItem">
+                <a href="index.html">
+                    <img src="./img/sneakers.png" alt="Nike Logo">
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="auth-container">
+        <div class="auth-box">
+            <h2>Create an Account</h2>
+            <form class="auth-form" action="index.html" method="GET" id="signupForm">
+                <div class="form-group">
+                    <label for="fullName">Full Name</label>
+                    <input type="text" id="fullName" class="auth-input" placeholder="Enter your full name" required>
+                    <div class="error-message" id="nameError">Please enter your full name</div>
+                </div>
+                <div class="form-group">
+                    <label for="signupEmail">Email</label>
+                    <input type="email" id="signupEmail" class="auth-input" placeholder="Enter your email" required>
+                    <div class="error-message" id="emailError">Please enter a valid email address</div>
+                </div>
+                <div class="form-group">
+                    <label for="signupPassword">Password</label>
+                    <input type="password" id="signupPassword" class="auth-input" placeholder="Create a password" required>
+                    <div class="error-message" id="passwordError">Password must be at least 6 characters</div>
+                </div>
+                <div class="form-group">
+                    <label for="confirmPassword">Confirm Password</label>
+                    <input type="password" id="confirmPassword" class="auth-input" placeholder="Confirm your password" required>
+                    <div class="error-message" id="confirmPasswordError">Passwords do not match</div>
+                </div>
+                <div class="form-group">
+                    <button type="submit" class="auth-button" id="signupButton">Sign Up</button>
+                </div>
+                <div class="auth-links">
+                    <p>Already have an account? <a href="login.html">Login</a></p>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        const signupForm = document.getElementById('signupForm');
+        const signupButton = document.getElementById('signupButton');
+        const nameInput = document.getElementById('fullName');
+        const emailInput = document.getElementById('signupEmail');
+        const passwordInput = document.getElementById('signupPassword');
+        const confirmPasswordInput = document.getElementById('confirmPassword');
+        const nameError = document.getElementById('nameError');
+        const emailError = document.getElementById('emailError');
+        const passwordError = document.getElementById('passwordError');
+        const confirmPasswordError = document.getElementById('confirmPasswordError');
+
+        function validateEmail(email) {
+            return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+        }
+
+        function showError(input, errorElement, message) {
+            input.classList.add('error');
+            errorElement.style.display = 'block';
+            errorElement.textContent = message;
+        }
+
+        function hideError(input, errorElement) {
+            input.classList.remove('error');
+            errorElement.style.display = 'none';
+        }
+
+        signupForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            let isValid = true;
+
+            // Validate name
+            if (nameInput.value.trim().length < 2) {
+                showError(nameInput, nameError, 'Please enter your full name');
+                isValid = false;
+            } else {
+                hideError(nameInput, nameError);
+            }
+
+            // Validate email
+            if (!validateEmail(emailInput.value)) {
+                showError(emailInput, emailError, 'Please enter a valid email address');
+                isValid = false;
+            } else {
+                hideError(emailInput, emailError);
+            }
+
+            // Validate password
+            if (passwordInput.value.length < 6) {
+                showError(passwordInput, passwordError, 'Password must be at least 6 characters');
+                isValid = false;
+            } else {
+                hideError(passwordInput, passwordError);
+            }
+
+            // Validate confirm password
+            if (passwordInput.value !== confirmPasswordInput.value) {
+                showError(confirmPasswordInput, confirmPasswordError, 'Passwords do not match');
+                isValid = false;
+            } else {
+                hideError(confirmPasswordInput, confirmPasswordError);
+            }
+
+            if (isValid) {
+                signupButton.classList.add('loading');
+                // Simulate API call
+                setTimeout(() => {
+                    signupButton.classList.remove('loading');
+                    window.location.href = 'index.html';
+                }, 1500);
+            }
+        });
+
+        // Clear errors on input
+        nameInput.addEventListener('input', () => hideError(nameInput, nameError));
+        emailInput.addEventListener('input', () => hideError(emailInput, emailError));
+        passwordInput.addEventListener('input', () => {
+            hideError(passwordInput, passwordError);
+            if (confirmPasswordInput.value) {
+                if (passwordInput.value !== confirmPasswordInput.value) {
+                    showError(confirmPasswordInput, confirmPasswordError, 'Passwords do not match');
+                } else {
+                    hideError(confirmPasswordInput, confirmPasswordError);
+                }
+            }
+        });
+        confirmPasswordInput.addEventListener('input', () => {
+            if (passwordInput.value !== confirmPasswordInput.value) {
+                showError(confirmPasswordInput, confirmPasswordError, 'Passwords do not match');
+            } else {
+                hideError(confirmPasswordInput, confirmPasswordError);
+            }
+        });
+    </script>
+</body>
+</html> 
